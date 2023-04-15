@@ -33,6 +33,9 @@ class logic_xor;
 template<typename ...T>
 class logic_xor_n;
 
+template<typename T>
+class logic_not;
+
 template<>
 class logic_and<_tnum_1, _tnum_1> {
 public:
@@ -83,6 +86,18 @@ class logic_xor_n<T1>: public T1 {};
 
 template<typename ...T, typename Tf>
 class logic_xor_n<Tf, T...> : public logic_xor<Tf, typename logic_xor_n<T...>::type>::type {};
+
+template<>
+class logic_not<_tnum_1> {
+public:
+  typedef _tnum_0 type;
+};
+
+template<>
+class logic_not<_tnum_0> {
+public:
+  typedef _tnum_1 type;
+};
 
 template<typename T>
 class logic_left_shift;

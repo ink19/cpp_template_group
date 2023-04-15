@@ -2,6 +2,7 @@
 #define __INK19_TNUM_COMPARE
 
 #include "tnum.hpp"
+#include "tnum_logic.hpp"
 
 namespace ink19 {
 template<typename T, typename S>
@@ -108,6 +109,15 @@ public:
     std::is_base_of<typename __get_base<T>::type, typename __get_base<S>::type>::value
   , _tnum_1, _tnum_0>::type type;
 };
+
+template<typename T, typename S>
+class compare_ge : public logic_or<typename compare_gt<T, S>::type, typename compare_equal<T, S>::type>::type {};
+
+template<typename T, typename S>
+class compare_le : public logic_not<typename compare_gt<T, S>::type>::type {};
+
+template<typename T, typename S>
+class compare_lt : public logic_not<typename compare_ge<T, S>::type>::type {};
 
 }
 
