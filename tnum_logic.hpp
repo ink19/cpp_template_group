@@ -5,14 +5,33 @@
 
 namespace ink19 {
 
+template<bool b>
+class __bool_to_tnum_bit;
+
+template<>
+class __bool_to_tnum_bit<false> : public _tnum_0 {};
+
+template<>
+class __bool_to_tnum_bit<true> : public _tnum_1 {};
+
 template<typename T, typename S>
 class logic_and;
+
+template<typename ...T>
+class logic_and_n : public std::conditional<true && std::is_same<_tnum_0, T>::value..., _tnum_1, _tnum_0>::type {};
 
 template<typename T, typename S>
 class logic_or;
 
+template<typename ...T>
+class logic_or_n : public std::conditional<false || std::is_same<_tnum_0, T>::value..., _tnum_1, _tnum_0>::type {};
+;
+
 template<typename T, typename S>
 class logic_xor;
+
+template<typename ...T>
+class logic_xor_n;
 
 template<>
 class logic_and<_tnum_1, _tnum_1> {
@@ -55,6 +74,15 @@ class logic_xor {
 public:
   typedef _tnum_1 type;
 };
+
+template<typename T1, typename T2>
+class logic_xor_n<T1, T2>: public logic_xor<T1, T2> {};
+
+template<typename T1>
+class logic_xor_n<T1>: public T1 {};
+
+template<typename ...T, typename Tf>
+class logic_xor_n<Tf, T...> : public logic_xor<Tf, typename logic_xor_n<T...>::type>::type {};
 
 template<typename T>
 class logic_left_shift;

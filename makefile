@@ -1,6 +1,7 @@
 .PHONY: all clean
 
 LIB+=-lgtest
+CXX_FLAGS+=-std=c++11
 
 all: main
 

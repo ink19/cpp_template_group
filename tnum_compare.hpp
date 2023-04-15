@@ -102,7 +102,11 @@ public:
 template<typename T, typename S>
 class compare_equal {
 public:
-  typedef typename std::conditional<std::is_same<typename T::type, typename S::type>::value, _tnum_1, _tnum_0>::type type;
+  typedef typename std::conditional<
+    std::is_same<typename __get_base<T>::type, typename __get_base<S>::type>::value &&
+    std::is_base_of<typename __get_base<T>::type, typename __get_base<S>::type>::value &&
+    std::is_base_of<typename __get_base<T>::type, typename __get_base<S>::type>::value
+  , _tnum_1, _tnum_0>::type type;
 };
 
 }
