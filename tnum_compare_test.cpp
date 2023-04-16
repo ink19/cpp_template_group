@@ -21,6 +21,40 @@ TEST_F(TNumCompareTest, compare_gt) {
 
   EXPECT_TRUE((std::is_same<ink19::_tnum_1, ink19::compare_gt<test_num_neg_100, test_num_neg_122>::type>::value));
   EXPECT_TRUE((std::is_same<ink19::_tnum_0, ink19::compare_gt<test_num_neg_100, test_num_neg_82>::type>::value));
+  EXPECT_TRUE((std::is_same<ink19::_tnum_0, ink19::compare_gt<test_num_neg_100, test_num_neg_100>::type>::value));
+}
+
+TEST_F(TNumCompareTest, compare_ge) {
+  EXPECT_TRUE((std::is_same<ink19::_tnum_1, ink19::compare_ge<test_num_100, test_num_equal_100>::type>::value));
+  EXPECT_TRUE((std::is_same<ink19::_tnum_0, ink19::compare_ge<test_num_100, test_num_124>::type>::value));
+  EXPECT_TRUE((std::is_same<ink19::_tnum_1, ink19::compare_ge<test_num_100, test_num_97>::type>::value));
+  EXPECT_TRUE((std::is_same<ink19::_tnum_1, ink19::compare_ge<test_num_100, test_num_neg_100>::type>::value));
+
+  EXPECT_TRUE((std::is_same<ink19::_tnum_1, ink19::compare_ge<test_num_neg_100, test_num_neg_122>::type>::value));
+  EXPECT_TRUE((std::is_same<ink19::_tnum_0, ink19::compare_ge<test_num_neg_100, test_num_neg_82>::type>::value));
+  EXPECT_TRUE((std::is_same<ink19::_tnum_1, ink19::compare_ge<test_num_neg_100, test_num_neg_100>::type>::value));
+}
+
+TEST_F(TNumCompareTest, compare_lt) {
+  EXPECT_TRUE((std::is_same<ink19::_tnum_0, ink19::compare_lt<test_num_100, test_num_equal_100>::type>::value));
+  EXPECT_TRUE((std::is_same<ink19::_tnum_1, ink19::compare_lt<test_num_100, test_num_124>::type>::value));
+  EXPECT_TRUE((std::is_same<ink19::_tnum_0, ink19::compare_lt<test_num_100, test_num_97>::type>::value));
+  EXPECT_TRUE((std::is_same<ink19::_tnum_0, ink19::compare_lt<test_num_100, test_num_neg_100>::type>::value));
+
+  EXPECT_TRUE((std::is_same<ink19::_tnum_0, ink19::compare_lt<test_num_neg_100, test_num_neg_122>::type>::value));
+  EXPECT_TRUE((std::is_same<ink19::_tnum_1, ink19::compare_lt<test_num_neg_100, test_num_neg_82>::type>::value));
+  EXPECT_TRUE((std::is_same<ink19::_tnum_0, ink19::compare_lt<test_num_neg_100, test_num_neg_100>::type>::value));
+}
+
+TEST_F(TNumCompareTest, compare_le) {
+  EXPECT_TRUE((std::is_same<ink19::_tnum_1, ink19::compare_le<test_num_100, test_num_equal_100>::type>::value));
+  EXPECT_TRUE((std::is_same<ink19::_tnum_1, ink19::compare_le<test_num_100, test_num_124>::type>::value));
+  EXPECT_TRUE((std::is_same<ink19::_tnum_0, ink19::compare_le<test_num_100, test_num_97>::type>::value));
+  EXPECT_TRUE((std::is_same<ink19::_tnum_0, ink19::compare_le<test_num_100, test_num_neg_100>::type>::value));
+
+  EXPECT_TRUE((std::is_same<ink19::_tnum_0, ink19::compare_le<test_num_neg_100, test_num_neg_122>::type>::value));
+  EXPECT_TRUE((std::is_same<ink19::_tnum_1, ink19::compare_le<test_num_neg_100, test_num_neg_82>::type>::value));
+  EXPECT_TRUE((std::is_same<ink19::_tnum_1, ink19::compare_le<test_num_neg_100, test_num_neg_100>::type>::value));
 }
 
 TEST_F(TNumCompareTest, compare_equal) {
