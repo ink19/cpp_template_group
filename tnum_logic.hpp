@@ -18,14 +18,13 @@ template<typename T, typename S>
 class logic_and;
 
 template<typename ...T>
-class logic_and_n : public std::conditional<true && std::is_same<_tnum_0, T>::value..., _tnum_1, _tnum_0>::type {};
+class logic_and_n;
 
 template<typename T, typename S>
 class logic_or;
 
 template<typename ...T>
-class logic_or_n : public std::conditional<false || std::is_same<_tnum_0, T>::value..., _tnum_1, _tnum_0>::type {};
-;
+class logic_or_n;
 
 template<typename T, typename S>
 class logic_xor;
@@ -48,6 +47,12 @@ public:
   typedef _tnum_0 type;
 };
 
+template<typename Tf, typename ...T>
+class logic_and_n<Tf, T...> : public logic_and<Tf, typename logic_and_n<T...>::type> {};
+
+template<typename T>
+class logic_and_n<T> : public T {};
+
 template<>
 class logic_or<_tnum_0, _tnum_0> {
 public:
@@ -59,6 +64,12 @@ class logic_or {
 public:
   typedef _tnum_1 type;
 };
+
+template<typename Tf, typename ...T>
+class logic_or_n<Tf, T...> : public logic_or<Tf, typename logic_or_n<T...>::type> {};
+
+template<typename T>
+class logic_or_n<T> : public T {};
 
 template<>
 class logic_xor<_tnum_1, _tnum_0> {
@@ -75,7 +86,7 @@ public:
 template<typename T, typename S>
 class logic_xor {
 public:
-  typedef _tnum_1 type;
+  typedef _tnum_0 type;
 };
 
 template<typename T1, typename T2>
