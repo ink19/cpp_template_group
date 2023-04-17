@@ -12,19 +12,22 @@ class __pair {
 public:
   typedef T1 type1;
   typedef T2 type2;
+  typedef __pair<T1, T2> type;
 };
 
 template<typename S>
-class __pair_swap;
-
-template<typename T1, typename T2>
-class __pair_swap<__pair<T1, T2>> : __pair<T2, T1> {};
+class __pair_swap{
+public:
+  typedef typename S::type2 type1;
+  typedef typename S::type1 type2;
+  typedef __pair_swap<S> type;
+};
 
 template<typename T1, typename T2, bool is_bit_len_equal>
 class __zero_padding_impl;
 
 template<typename T1, typename T2>
-class __zero_padding :  std::conditional<
+class __zero_padding : public std::conditional<
   std::is_same<
     _tnum_1,
     typename __compare_gt_bit<T1, T2>::is_equal_type
@@ -33,16 +36,16 @@ class __zero_padding :  std::conditional<
   typename std::conditional<
     std::is_same<_tnum_1, typename __compare_gt_bit<T1, T2>::type>::value,
     __zero_padding_impl<T1, T2, false>,
-    __pair_swap<__zero_padding_impl<T1, T2, false>>
+    __pair_swap<__zero_padding_impl<T2, T1, false>>
   >::type
 >::type {};
 
 
 template<typename T1, typename T2>
-class __zero_padding_impl<T1, T2, true> : __pair<T1, T2> {};
+class __zero_padding_impl<T1, T2, true> : public __pair<T1, T2> {};
 
 template<typename T1, typename T2>
-class __zero_padding_impl<T1, T2, false> : __zero_padding_impl<
+class __zero_padding_impl<T1, T2, false> : public __zero_padding_impl<
   T1, 
   typename __concat_left<_tnum_0, T2>::type, 
   std::is_same<
@@ -67,11 +70,11 @@ template<typename T1, typename T2>
 class __unsigned_add : public __get_base<__unsigned_padding_add<
   typename __zero_padding<
     typename __concat_left<_tnum_0, T1>::type, // 前面加0，防止进位
-    T2
+    typename __concat_left<_tnum_0, T2>::type
   >::type1,
   typename __zero_padding<
     typename __concat_left<_tnum_0, T1>::type, 
-    T2
+    typename __concat_left<_tnum_0, T2>::type
   >::type2
 >>::type {};
 
@@ -114,17 +117,18 @@ public:
    * 1 1 1 = 1
    * (Tf1 & Tf2 & carry) | !(Tf1 ^ Tf2 ^ carry)
    */
-  typedef typename logic_or<
-    typename logic_and_n<Tf1, Tf2, typename left_type::carry_type>::type, 
-    typename logic_not<typename logic_xor_n<Tf1, Tf2, typename left_type::carry_type>::type
-  >::type>::type carry_type;
+  typedef typename logic_or_n<
+    typename logic_and<Tf1, Tf2>::type,
+    typename logic_and<Tf1, typename left_type::carry_type>::type,
+    typename logic_and<Tf2, typename left_type::carry_type>::type
+  >::type carry_type;
   typedef typename __concat_left<bit_type, typename left_type::type>::type type;
 };
 
 template<>
 class __unsigned_padding_add<__tnum_unsigned<>, __tnum_unsigned<>> {
 public:
-  typedef __tnum_unsigned<_tnum_0> type;
+  typedef __tnum_unsigned<> type;
   typedef _tnum_0 carry_type;
 };
 
@@ -166,7 +170,7 @@ public:
 template<>
 class __unsigned_padding_sub<__tnum_unsigned<>, __tnum_unsigned<>> {
 public:
-  typedef __tnum_unsigned<_tnum_0> type;
+  typedef __tnum_unsigned<> type;
   typedef _tnum_0 carry_type;
 };
 
@@ -194,7 +198,7 @@ class compute_sub<tnum<_tnum_0, T1...>, tnum<_tnum_0, T2...>> : public __add_sig
 
 template<typename ...T1, typename ...T2>
 class compute_sub<tnum<_tnum_1, T1...>, tnum<_tnum_1, T2...>> : public opposite<
-  typename compute_sub<tnum<_tnum_0, T1...>, tnum<_tnum_0, T1...>>::type
+  typename compute_sub<tnum<_tnum_0, T1...>, tnum<_tnum_0, T2...>>::type
 >::type {};
 
 template<typename ...T1, typename ...T2>

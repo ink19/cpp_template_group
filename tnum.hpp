@@ -58,7 +58,7 @@ template<>
 class tnum<_tnum_0> {
 public:
   typedef tnum<_tnum_0> self_type;
-  typedef _tnum_0 type;
+  typedef tnum<_tnum_0> type;
 };
 
 template<>
@@ -123,6 +123,18 @@ template<typename ...T>
 class opposite<tnum<_tnum_1, T...>> {
 public:
   typedef typename tnum<_tnum_0, T...>::type type;
+};
+
+template<>
+class opposite<_tnum_0> {
+public:
+  typedef tnum<_tnum_0, _tnum_0> type;
+};
+
+template<>
+class opposite<_tnum_1> {
+public:
+  typedef tnum<_tnum_1, _tnum_1> type;
 };
 
 // 保证num为正数
