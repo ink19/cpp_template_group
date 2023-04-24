@@ -1,5 +1,5 @@
-#ifndef __INK19_TNUM_ADD
-#define __INK19_TNUM_ADD
+#ifndef __INK19_TNUM_COMPUTE
+#define __INK19_TNUM_COMPUTE
 
 #include "tnum.hpp"
 #include "tnum_compare.hpp"
@@ -202,10 +202,10 @@ class compute_sub<tnum<_tnum_1, T1...>, tnum<_tnum_1, T2...>> : public opposite<
 >::type {};
 
 template<typename ...T1, typename ...T2>
-class compute_sub<tnum<_tnum_0, T1...>, tnum<_tnum_1, T2...>> : public compute_add<tnum<_tnum_0, T1...>, tnum<_tnum_0, T1...>>::type {};
+class compute_sub<tnum<_tnum_0, T1...>, tnum<_tnum_1, T2...>> : public compute_add<tnum<_tnum_0, T1...>, tnum<_tnum_0, T2...>>::type {};
 
 template<typename ...T1, typename ...T2>
-class compute_sub<tnum<_tnum_1, T1...>, tnum<_tnum_0, T2...>> : public compute_add<tnum<_tnum_1, T1...>, tnum<_tnum_1, T1...>>::type {};
+class compute_sub<tnum<_tnum_1, T1...>, tnum<_tnum_0, T2...>> : public compute_add<tnum<_tnum_1, T1...>, tnum<_tnum_1, T2...>>::type {};
 
 } // namespace ink19 end
 #endif
